@@ -21,19 +21,18 @@ for root, dirs, files in os.walk(path):
 
 for aux in filelist:
 
-	#abre arquivo selecionado
-	f = open(aux, 'r')
 	#paragrafos
+	f = open(aux, 'r')
 	paragrafos = list(filter(lambda value: value != '', [value.replace('\n', '').strip('"') for value in f]))
 
+	#palavras
 	f = open(aux, 'r')
 	data = f.read() #todo texto
 	words = data.split() #palavras
 	qnt_parag = str(len(paragrafos)-1)
 	qnt_words=str(len(words))
-	#print(paragrafos)
-	#print(words)
 
+	#estatistica
 	arquivo = open('estatistica.txt', 'a')
 	arquivo.write(aux + '\n')
 	arquivo.write(qnt_parag + '\t')
