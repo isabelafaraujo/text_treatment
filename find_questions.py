@@ -1,6 +1,6 @@
 import os
 
-path = "F:/Faculdade/UFG/Mestrado/NPL/AmericansHealth/arquivos_diabetes"
+path = "F:/Faculdade/UFG/...."
 
 filelist = []
 
