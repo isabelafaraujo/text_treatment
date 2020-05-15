@@ -3,6 +3,7 @@ import os
 path = "F:/Faculdade/UFG/Mestrado/NPL/AmericansHealth/arquivos_diabetes"
 
 filelist = []
+questions = []
 
 for root, dirs, files in os.walk(path):
     for file in files:
@@ -17,4 +18,11 @@ for arquivo in filelist:
     for frase in frases:
         for pergunta in frase:
             if pergunta == '?':
-                print(frase + arquivo + '\n')
+               questions.append(frase)
+
+perguntas = [i for n, i in enumerate(questions) if i not in questions[n + 1:]]
+for perguntas in perguntas:
+    print(perguntas)
+
+print(len(perguntas))
+
