@@ -2,48 +2,46 @@ import re
 import os
 from nltk import word_tokenize
 
-path = "..."
-
-filelist = []
-tam = []
-qnt_questions = []
-
-for root, dirs, files in os.walk(path):
-    for file in files:
-        if file.endswith(".txt"):
-            filelist.append(file)
-
-for aux in filelist:
-    file = open(aux, 'r', encoding='ISO-8859-1')
-    text = file.read()  # todo texto
-
-        def split_by_break(texto): #separa por \n
-        texto = re.sub(r'[“”]', '"', texto) #quebra em \n
+def split_by_break(texto):
+        texto = re.sub(r'[“”]', '"', texto)
         return [sentenca.strip() for sentenca in texto.splitlines()]
 
-    def remove_empty_entrance(texto):
+def remove_empty_entrance(texto):
         texto = list(filter(lambda x: x != '', texto))
         return texto
 
-    def find_questions(q): #separa sentencas que tem ?, pode pegar parte do texto da frente
-        questions = [w for w in q if re.search('\\?', w)]
-        qnt_questions.append(len(questions))
+def find_questions(q):
+        questions = re.findall('(?<=[\?\.\!]\s)[^\?\n\.]+?\?', q)
         return questions
 
-    def paragrafos(texto):
-        tam.append(len(texto))
-        return sum(tam)
+def paragrafos(texto):
+       tam = []
+       tam.append(len(texto))
+       return sum(tam)
 
-    def palavras(word):
-        words=word_tokenize(word)
-        print(words)
+def main():
+    path = "...."
+    os.chdir(path)
+    filelist = []
 
-    result=remove_empty_entrance(split_by_break(text))
-    questions=find_questions(result)
-    print(result)
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            if file.endswith(".txt"):
+                filelist.append(path+file)
+    
+    questions = []
+    result = []
+    for aux in filelist:
+        file = open(aux, 'r', encoding='utf-8')
+        text = file.read()
 
-print('Total de paragrafos: ' + str(paragrafos(result)))
-print('Total de perguntas: '+ str(sum(qnt_questions)))
+        result = result + remove_empty_entrance(split_by_break(text))
+        questions = questions + find_questions(text)
+    
+    print(questions)
+    print('Total de paragrafos: ' + str(paragrafos(result)))
+    print('Total de perguntas: '+ str(len(questions)))
 
-
-
+if __name__ == "__main__":
+    main()
+    
